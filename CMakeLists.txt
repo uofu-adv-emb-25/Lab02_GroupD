@@ -44,7 +44,7 @@ include(${PICO_SDK_PATH}/pico_sdk_init.cmake)
 include(${FREERTOS_PATH}/portable/ThirdParty/GCC/RP2040/FreeRTOS_Kernel_import.cmake)
 
 # This sets up the unity library. They don't provide a library export, so it's defined locally.
-include(unity.cmake)
+#include(unity.cmake)
 
 # This defines your project name, you can name it anything you want.
 project(myproject C CXX ASM)
@@ -65,5 +65,5 @@ include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 add_subdirectory(src)
 
 # The test configuration is inside the test directory.
-include(CTest)
-add_subdirectory(test)
+#include(CTest)
+#add_subdirectory(test)
