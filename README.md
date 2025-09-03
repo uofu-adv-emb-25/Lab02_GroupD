@@ -11,4 +11,4 @@ To add the Pico configuration files:
 
 Pico Blink Project:
 - Introduction to Cmake and makes the raspberry pico blink.
-![example workflow](https://github.com/<OWNER>/<REPOSITORY>/actions/workflows/main.yml/badge.svg)
+![example workflow](https://github.com/uofu-adv-emb-25/lab_0_group_H/actions/workflows/main.yml/badge.svg)
