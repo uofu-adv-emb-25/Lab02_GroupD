@@ -12,6 +12,7 @@
 #include "pico/stdlib.h"
 #include "pico/multicore.h"
 #include "pico/cyw43_arch.h"
+#include "func.h"
 
 int count = 0;
 bool on = false;
@@ -30,9 +31,11 @@ void blink_task(__unused void *params) {
     hard_assert(cyw43_arch_init() == PICO_OK);
     
     //Alternate LED state 11*delayLength
+    int count = 0;
+    bool on = 0;
     while (true) {
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, on);
-        if (count++ % 11) on = !on;
+        count++;
+        on = blinky(on,count);
         vTaskDelay(LED_DELAY_MS);
     }
 }
@@ -42,12 +45,9 @@ void main_task(__unused void *params) {
                 BLINK_TASK_STACK_SIZE, NULL, BLINK_TASK_PRIORITY, NULL);
     
     //Changing case of char
-    int caseOffset = 32;
     char c;
     while(c = getchar()) {
-        if (c <= 'z' && c >= 'a') putchar(c - caseOffset);
-        else if (c >= 'A' && c <= 'Z') putchar(c + caseOffset);
-        else putchar(c);
+        putchar(changeCase(c));
     }
 }
 
