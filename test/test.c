@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <unity.h>
 #include "unity_config.h"
-#include "../include/func.h"
+#include "func.h"
 
 void setUp(void) {}
 
