@@ -5,12 +5,19 @@
 #include "unity_config.h"
 #include "func.h"
 
-void setUp(void) {}
+void setUp(void) 
+{        
+    printf("Start test\n");
+}
 
-void tearDown(void) {}
+void tearDown(void) 
+{
+    printf("Finished test\n");
+}
 
 void test_blinky()
 {
+    setUp();
     int count = 11;
     TEST_ASSERT_TRUE_MESSAGE(blinky(true, count)==true, "Test assert blinky should be off, is on with passed in count 11");
     TEST_ASSERT_TRUE_MESSAGE(blinky(false, count)==false, "Test assert blinky should be on, is off with passed in count 11");
@@ -36,15 +43,17 @@ void test_blinky()
         }
         on = next_on;
     }
+    tearDown();
 }
 
 void test_changeCase()
 {
+    setUp();
     TEST_ASSERT_TRUE_MESSAGE(changeCase('a')=='A', "Test assert failed, wrong char returned from changecase");
     TEST_ASSERT_TRUE_MESSAGE(changeCase('A')=='a', "Test assert failed, wrong char returned from changecase");
     TEST_ASSERT_TRUE_MESSAGE(changeCase('K')=='k', "Test assert failed, wrong char returned from changecase");
     TEST_ASSERT_TRUE_MESSAGE(changeCase('[')=='[', "Test assert failed, wrong char returned from changecase");
-
+    tearDown();
 }
 
 void test_variable_assignment()
@@ -66,7 +75,6 @@ int main (void)
     while(1) {
         stdio_init_all();
         sleep_ms(5000); // Give time for TTY to attach.
-        printf("Start tests\n");
         UNITY_BEGIN();
         RUN_TEST(test_blinky);
         RUN_TEST(test_changeCase);
