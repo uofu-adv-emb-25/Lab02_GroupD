@@ -30,7 +30,7 @@ void blink_task(__unused void *params) {
     //Initialize the architecture
     hard_assert(cyw43_arch_init() == PICO_OK);
     
-    //Alternate LED state 11*delayLength
+    //Alternate LED state every delayLength
     int count = 0;
     bool on = 0;
     while (true) {

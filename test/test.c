@@ -12,17 +12,30 @@ void tearDown(void) {}
 void test_blinky()
 {
     int count = 11;
-    TEST_ASSERT_TRUE_MESSAGE(blinky(true, count)==false, "Test assert blinky should be off, is on with passed in count 11");
-    TEST_ASSERT_TRUE_MESSAGE(blinky(false, count)==true, "Test assert blinky should be on, is off with passed in count 11");
+    TEST_ASSERT_TRUE_MESSAGE(blinky(true, count)==true, "Test assert blinky should be off, is on with passed in count 11");
+    TEST_ASSERT_TRUE_MESSAGE(blinky(false, count)==false, "Test assert blinky should be on, is off with passed in count 11");
 
     count = 22;
-    TEST_ASSERT_TRUE_MESSAGE(blinky(true, count)==false, "Test assert blinky should be off, is on with passed in count 22");
-    TEST_ASSERT_TRUE_MESSAGE(blinky(false, count)==true, "Test assert blinky should be on, is off with passed in count 22");
+    TEST_ASSERT_TRUE_MESSAGE(blinky(true, count)==true, "Test assert blinky should be off, is on with passed in count 22");
+    TEST_ASSERT_TRUE_MESSAGE(blinky(false, count)==false, "Test assert blinky should be on, is off with passed in count 22");
 
     count = 15;
-    TEST_ASSERT_TRUE_MESSAGE(blinky(true, count)==true, "Test assert blinky should be on, is off with passed in count 15");
-    TEST_ASSERT_TRUE_MESSAGE(blinky(false, count)==false, "Test assert blinky should be off, is on with passed in count 15");
+    TEST_ASSERT_TRUE_MESSAGE(blinky(true, count)==false, "Test assert blinky should be on, is off with passed in count 15");
+    TEST_ASSERT_TRUE_MESSAGE(blinky(false, count)==true, "Test assert blinky should be off, is on with passed in count 15");
     
+    cyw243_archo_gpio_put(CYW43_WL_GPIO_LED_PIN,0);
+    bool on = 0;
+    for(int count = 0; count < 100 ; count++) {
+        bool next_on = blinky(on,count);
+        int gpioState = cyw243_archo_gpio_get(CYW43_WL_GPIO_LED_PIN);
+        TEST_ASSERT_EQUAL_MESSAGE(on,gpioState,"GPIO state should be set to value of on");
+        if(count % 11) {
+            TEST_ASSERT_NOT_EQUAL_MESSAGE(on,next_on,"Should toggle when count is not a multiple of 11");
+        } else {
+            TEST_ASSERT_EQUAL_MESSAGE(on,next_on,"on should stay the same when count is multiple of 11.");
+        }
+        on = next_on;
+    }
 }
 
 void test_changeCase()
