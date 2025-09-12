@@ -3,8 +3,17 @@
 #include "func.h"
 
 bool blinky(bool on, int count) {
+
+    //printf("entered blinky subroutine\n");
+
     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, on);
-    if (count % 11) 
+
+    //printf("before mod in subroutine\n");
+
+    if (count % 11)
         on = !on;
+
+    //printf("after mod in subroutine\n");
+    //printf("returning from blinky subroutine\n");
     return on;
 }

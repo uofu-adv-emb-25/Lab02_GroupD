@@ -18,6 +18,7 @@ void tearDown(void)
 
 void test_blinky()
 {
+    //printf("entered Blinky\n");
     int count = 11;
     TEST_ASSERT_TRUE_MESSAGE(blinky(true, count)==true, "Test assert blinky should be off, is on with passed in count 11");
     TEST_ASSERT_TRUE_MESSAGE(blinky(false, count)==false, "Test assert blinky should be on, is off with passed in count 11");
@@ -30,6 +31,9 @@ void test_blinky()
     TEST_ASSERT_TRUE_MESSAGE(blinky(true, count)==false, "Test assert blinky should be on, is off with passed in count 15");
     TEST_ASSERT_TRUE_MESSAGE(blinky(false, count)==true, "Test assert blinky should be off, is on with passed in count 15");
     
+    //printf("finished straight blinky runs\n");
+    //printf("start blinky for loop\n");
+
     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN,0);
     bool on = 0;
     for(int count = 0; count < 100 ; count++) {
@@ -43,6 +47,8 @@ void test_blinky()
         }
         on = next_on;
     }
+
+    //printf("finished blinky for loop\n");
 }
 
 void test_changeCase()
@@ -55,7 +61,7 @@ void test_changeCase()
 
 void test_variable_assignment()
 {
-    int x = 2;
+    int x = 1;
     TEST_ASSERT_TRUE_MESSAGE(x == 1,"Variable assignment failed.");
 }
 
@@ -69,16 +75,19 @@ void test_multiplication(void)
 
 int main (void)
 {
-    while(1) {
-        stdio_init_all();
-        sleep_ms(5000); // Give time for TTY to attach.
-        UNITY_BEGIN();
-        RUN_TEST(test_variable_assignment);
-        RUN_TEST(test_multiplication);
-        //RUN_TEST(test_blinky);
-        RUN_TEST(test_changeCase);
-        sleep_ms(5000);
-        UNITY_END();
-    }
+    stdio_init_all();
+    hard_assert(cyw43_arch_init() == PICO_OK);
+    
+    sleep_ms(10000); // Give time for TTY to attach.
+    UNITY_BEGIN();
+    RUN_TEST(test_variable_assignment);
+    RUN_TEST(test_multiplication);
+    RUN_TEST(test_blinky);
+    RUN_TEST(test_changeCase);
+    sleep_ms(5000);
+    UNITY_END();
+
+    while(1) { sleep_ms(5000); }
+
     return UNITY_END();
 }
